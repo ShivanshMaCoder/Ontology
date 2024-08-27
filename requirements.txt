@@ -1,0 +1,9 @@
+google-generativeai
+pandas
+numpy
+fastapi
+python-dotenv
+openpyxl
+uvicorn
+azure-storage-blob
+tqdm
