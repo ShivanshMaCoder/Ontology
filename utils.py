@@ -9,6 +9,7 @@ from azure.storage.blob import BlobServiceClient, BlobClient
 from tqdm import trange, tqdm
 from typing import List
 import random
+import shutil
 
 logging.basicConfig(level=logging.INFO)
 
@@ -19,6 +20,14 @@ class FileManager:
         self.azure_connection_string = azure_connection_string
         self.azure_directory_path = azure_directory_path
         self.Flag = flag
+
+    def delete_directory(self):
+        """Deletes the directory and all its contents."""
+        if os.path.exists(self.directory):
+            shutil.rmtree(self.directory)
+            print(f"Directory {self.directory} and all its contents have been deleted.")
+        else:
+            print(f"Directory {self.directory} does not exist.")
 
     def list_all_blobs_in_folder(self, container_client, folder_name: str):
         """Lists all blobs in a given folder within an Azure blob container."""

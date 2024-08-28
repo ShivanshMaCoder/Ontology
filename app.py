@@ -46,7 +46,7 @@ async def process_ontology(request:OntologyRequest):
     processor.flatten_categories(categories)
     output_directory = 'HTML_FILES'
     file_manager = FileManager(
-        output_directory, azure_connection_string, azure_directory_path, flag=False)
+        output_directory, azure_connection_string, azure_directory_path,flag=False)
     unique_file_number_dict = file_manager.map_file_number_to_file_location()
     golden_truth_df = processor.change_source_files(unique_file_number_dict)
     genai_client = GeminiClient(api_key=os.getenv('GOOGLE_API_KEY'),flag=True)
@@ -66,7 +66,7 @@ async def process_ontology(request:OntologyRequest):
         entities = genai_client.gemini_call(
             genai_client.upload_multiple_files(sources), all_questions)
         all_entities.append(entities)
-
+    file_manager.delete_directory()
     final_answer = OntologyBuilder.build_ontology(final_answer, all_entities)
     try:
         file_path = OntologyBuilder.save_ontology(final_answer)
@@ -82,18 +82,17 @@ async def sample_ontology(request:TestOntologyRequest):
     azure_directory_path = request.azure_directory_path
     output_directory = 'HTML_FILES'
     file_manager = FileManager(
-        output_directory, azure_connection_string, azure_directory_path, flag=True)
+        output_directory, azure_connection_string, azure_directory_path,flag=True)
     file_manager.download_blob()
     genai_client = GeminiClient(api_key=os.getenv('GOOGLE_API_KEY'),flag=False)
     final_answer = dict()
     all_entities = []
     all_questions=[]
-    directory=output_directory
-    source = [os.path.join(directory, file) for file in os.listdir(directory) if os.path.isfile(os.path.join(directory, file))]
+    source = [os.path.join(output_directory, file) for file in os.listdir(output_directory) if os.path.isfile(os.path.join(output_directory, file))]
     entities = genai_client.gemini_call(
         genai_client.upload_multiple_files(source), all_questions)
     all_entities.append(entities)
- 
+    file_manager.delete_directory()
     final_answer = OntologyBuilder.build_ontology(final_answer, all_entities)
     try:
         file_path = OntologyBuilder.save_ontology(final_answer)
