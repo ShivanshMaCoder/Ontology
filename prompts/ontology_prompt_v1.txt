@@ -1,0 +1,27 @@
+'''The goal is to study the connections and relations between the entity types and their features in order to understand all available information from the given files.
+The user's task is to Identify the entity types that would help answer questions like {sep_ques}.
+As part of the analysis, you want to identify the entity types present in the following files.
+The entity types must be relevant to the user task.
+Avoid general entity types such as "other" or "unknown".
+This is VERY IMPORTANT: Do not generate redundant or overlapping entity types. For example, if the text contains "company" and "organization" entity types, you should return only one of them.
+And make sure EVERYTHING in your answer is relevant to the context of entity extraction.
+Return the entity types in JSON format with type as the key and description and example object as the value.
+=====================================================================
+EXAMPLE SECTION: The following section includes example output. These examples **must be excluded from your answer**.
+
+EXAMPLE 1
+Task: Determine the connections and organizational hierarchy within the specified community.
+Text: Our telecom company, Verizon, offers a wide range of mobile and internet plans such as the Unlimited Talk & Text Plan, Family Share Plan, and the Premium Data Package. We provide competitive pricing options like the Basic Plan at $29.99/month, the Standard Plan at $49.99/month, and the Premium Plan at $79.99/month. To enhance customer experience, we run promotions like the Summer Savings Discount, the New Customer Device Credit, and Holiday Bundles, allowing customers to get devices such as the iPhone 14, Samsung Galaxy S23, and Google Pixel 7 at reduced prices.
+              For account support, we offer 24/7 assistance through our Customer Service Hotline, Live Chat Support, and the TeleConnect Mobile App. Customers can manage their accounts, review their billing statements, and request technical support directly through our app or the TeleConnect Customer Portal.
+              Our channel operations include various sales and service channels, such as TeleConnect Retail Stores, Authorized Dealers, and our E-commerce Website. Each channel is equipped to handle new sign-ups, device upgrades, and plan modifications. Additionally, we support multi-channel operations through our call centers, social media platforms, and online helpdesk to ensure a seamless experience across all touchpoints. Verizon is dedicated to keeping you connected with flexible plans, affordable pricing, and top-tier customer support.
+JSON RESPONSE:
+{{
+    "Organization":{{'example': 'Verizon','description':"Represents the company or entity offering services and products."}},
+    "Plan": {{'example':'Unlimited Talk & Text Plan,Family Share Plan, and the Premium Data Package','description': "Defines the various service offerings available to customers."}},
+    "Pricing": {{'example':'$29.99/month,$49.99/month,$79.99/month','description':"Specifies the cost associated with the services and products."}},
+    "Discount": {{'example':'Summer Savings Discount,the New Customer Device Credit, and Holiday Bundles','description':"Refers to promotional offers that reduce the price of services or products."}},
+    "Device": {{'example':'iPhone 14, Samsung Galaxy S23, and Google Pixel 7','description':"Denotes the hardware products available for purchase or use."}} ,
+    "Feature": {{'example':'24/7 Customer Service Hotline, Live Chat Support, TeleConnect Mobile App','description':"Highlights the specific functionalities or benefits of a service or product."}},
+    "Channel": {{'example':'TeleConnect Retail Stores, Authorized Dealers, E-commerce Website, Call Centers, Social Media Platforms','description':" Indicates the platforms or avenues through which services and sales are delivered."}}
+}}
+END OF EXAMPLE 1'''

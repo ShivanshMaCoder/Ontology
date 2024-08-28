@@ -25,17 +25,17 @@ class FileManager:
         """Deletes the directory and all its contents."""
         if os.path.exists(self.directory):
             shutil.rmtree(self.directory)
-            print(f"Directory {self.directory} and all its contents have been deleted.")
+            logging.info(f"Directory {self.directory} and all its contents have been deleted.")
         else:
-            print(f"Directory {self.directory} does not exist.")
+            logging.info(f"Directory {self.directory} does not exist.")
 
     def list_all_blobs_in_folder(self, container_client, folder_name: str):
         """Lists all blobs in a given folder within an Azure blob container."""
         try:
             return list(container_client.list_blobs(name_starts_with=folder_name))
         except Exception as e:
-            print(f"Error listing blobs in folder {folder_name}: {e}")
-            return []
+            logging.info(f"Error listing blobs in folder {folder_name}: {e}")
+            raise e
 
     def download_blob(self) -> List[str]:
         """Downloads files from Azure directory, selecting a subset if there are many.
